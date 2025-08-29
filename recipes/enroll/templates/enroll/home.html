@@ -1,0 +1,383 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Meal Planner - Submitted Data</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Pacifico&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <style>
+    /* Background wallpaper from Unsplash: Photo by Brooke Lark */
+    body {
+      margin: 0;
+      padding: 2rem 1rem;
+      font-family: 'Inter', sans-serif;
+      background: url("https://i.pinimg.com/originals/85/28/ff/8528ff626ab682222092a855472d7df3.jpg") no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    /* Overlay for better readability */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+    
+      z-index: -1;
+      
+    }
+
+    .container {
+  max-width: 960px;
+  margin: 0 auto;
+  background: rgba(255, 247, 240, 0.85); /* Light cream with 85% opacity */
+  border-radius: 24px;
+  box-shadow: 0 8px 30px rgba(185, 122, 87, 0.25);
+  padding: 2.5rem 3rem;
+  box-sizing: border-box;
+}
+
+
+    /* Header */
+    .header-top {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .header-top h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 3.8rem;
+      color: #e50c46;
+      letter-spacing: 2px;
+      margin: 0;
+      text-shadow: 1px 1px 3px rgba(185, 122, 87, 0.4);
+    }
+
+    /* Section Titles */
+    section {
+      margin-bottom: 2.8rem;
+    }
+    section h2 {
+      font-size: 1.9rem;
+      color:#20278d;
+      border-bottom: 3px solid #0000;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.6rem;
+      font-weight: 700;
+    }
+
+    /* Days List */
+    ul.days-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    ul.days-list li {
+      background: #e8f5e9;
+      color: #2e7d32;
+      font-weight: 600;
+      padding: 0.7rem 1.3rem;
+      border-radius: 30px;
+      box-shadow: 0 3px 7px rgba(46, 125, 50, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      user-select: none;
+    }
+    ul.days-list li a.btn-danger {
+      background: transparent;
+      padding: 0;
+      font-size: 1.3rem;
+      color: #e94e4e;
+      box-shadow: none;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    ul.days-list li a.btn-danger:hover {
+      color: #bf3b3b;
+    }
+
+    /* Meals - card grid */
+    .meals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+    .meal-card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 12px 24px rgba(185, 122, 87, 0.22);
+      padding: 1.8rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: default;
+    }
+    .meal-card:hover {
+      box-shadow: 0 16px 32px rgba(185, 122, 87, 0.35);
+      transform: translateY(-6px);
+    }
+    .meal-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .meal-day {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #b97a57;
+      user-select: text;
+    }
+    .meal-type {
+      background: #4caf50;
+      color: white;
+      font-weight: 700;
+      padding: 0.4rem 1rem;
+      border-radius: 25px;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+      user-select: none;
+    }
+    .meal-description {
+      flex-grow: 1;
+      font-size: 1.05rem;
+      color: #444;
+      line-height: 1.5;
+      margin-bottom: 1.3rem;
+      white-space: pre-wrap;
+    }
+    .meal-card a.btn-danger {
+      align-self: flex-start;
+      background: #911c1c;
+      color: white;
+      padding: 0.5rem 1.2rem;
+      border-radius: 25px;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(207, 27, 27, 0.45);
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    .meal-card a.btn-danger:hover {
+      background: #db1769ff;
+    }
+
+    /* Recipes Table */
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 12px;
+      font-size: 1rem;
+    }
+    thead tr {
+      background: #c8e6c9;
+    }
+    th, td {
+      padding: 14px 18px;
+      text-align: left;
+      font-weight: 600;
+      color: #2e7d32;
+      vertical-align: middle;
+    }
+    tbody tr {
+      background: #f1f8e9;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(46, 125, 50, 0.08);
+    }
+    img.table-img {
+      border-radius: 12px;
+      max-width: 130px;
+      max-height: 90px;
+      object-fit: cover;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+    }
+    td[data-label]::before {
+      content: attr(data-label);
+      font-weight: 700;
+      color: #2e7d32;
+      display: none;
+    }
+
+    /* Grocery List */
+    ul.grocery-list {
+      list-style: none;
+      padding-left: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    ul.grocery-list li {
+      background: #e8f5e9;
+      padding: 0.7rem 1.4rem;
+      border-radius: 30px;
+      color: #1d3a1fff;
+      font-weight: 600;
+      box-shadow: 0 3px 9px rgba(46, 125, 50, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      user-select: none;
+    }
+    ul.grocery-list li a.btn-danger {
+      background: transparent;
+      padding: 0;
+      font-size: 1.3rem;
+      color: #e94e4e;
+      box-shadow: none;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    ul.grocery-list li a.btn-danger:hover {
+      color: #c21f50ff;
+    }
+
+    /* Add button */
+    .btn-primary {
+      display: inline-block;
+      background: #59d15dff;
+      color: white;
+      font-weight: 700;
+      padding: 0.75rem 1.8rem;
+      border-radius: 30px;
+      box-shadow: 0 6px 15px rgba(24, 236, 166, 0.4);
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      margin-bottom: 1rem;
+    }
+    .btn-primary:hover {
+      background: #43cea2;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 700px) {
+      .container {
+        padding: 1.5rem 1.5rem;
+      }
+      .meal-description {
+        font-size: 1rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .meals-grid {
+        grid-template-columns: 1fr;
+        gap: 1.6rem;
+      }
+      section h2 {
+        font-size: 1.6rem;
+      }
+      .header-top h1 {
+        font-size: 2.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header-top">
+      <h1>Submitted Data Overview</h1>
+    </div>
+
+    <!-- Days Section -->
+    <section>
+      <h2>Days</h2>
+      {% if days %}
+        <ul class="days-list">
+          {% for day in days %}
+            <li>
+              {{ day.name }}
+              <a href="{% url 'delete_day' day.pk %}" class="btn-danger" title="Delete Day">🗑️</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No Days added yet.</p>
+      {% endif %}
+    </section>
+
+    <!-- Meals Section -->
+    <section>
+      <h2>Meals</h2>
+      {% if meals %}
+        <div class="meals-grid">
+          {% for meal in meals %}
+            <div class="meal-card">
+              <div class="meal-header">
+                <span class="meal-day">{{ meal.day.name }}</span>
+                <span class="meal-type">{{ meal.get_meal_type_display }}</span>
+              </div>
+              <p class="meal-description">{{ meal.description }}</p>
+              <a href="{% url 'delete_meal' meal.pk %}" class="btn-danger" title="Delete Meal">🗑️ Delete</a>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p>No Meals added yet.</p>
+      {% endif %}
+    </section>
+
+    <!-- Recipes Section -->
+    <section>
+      <h2>Recipes</h2>
+      {% if recipes %}
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Image</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for recipe in recipes %}
+              <tr>
+                <td data-label="Title">{{ recipe.title }}</td>
+                <td data-label="Description">{{ recipe.description }}</td>
+                <td data-label="Image">
+                  {% if recipe.image %}
+                    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="table-img" />
+                  {% else %}
+                    <p>No image</p>
+                  {% endif %}
+                </td>
+                <td><a href="{% url 'delete_recipe' recipe.pk %}" class="btn-danger" title="Delete Recipe">🗑️</a></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>No Recipes added yet.</p>
+      {% endif %}
+    </section>
+
+    <!-- Grocery Items Section -->
+    <section>
+      <h2>Grocery Items</h2>
+      {% if grocery_list %}
+        <ul class="grocery-list">
+          {% for item in grocery_list %}
+            <li>
+              {{ item.name }}
+              <a href="{% url 'delete_grocery' item.pk %}" class="btn-danger" title="Delete Grocery Item">🗑️</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No Grocery Items added yet.</p>
+      {% endif %}
+    </section>
+
+    <a href="{% url 'meal_planner' %}" class="btn-primary">➕ Add More Items</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Meal Planner</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <div class="form-container">
+
+    <h2 class="form-heading">
+      <span class="heading-icon">🥗</span> Add a Meal
+    </h2>
+    <form method="POST">
+      {% csrf_token %}
+      {{ meal_form.as_p }}
+      <button type="submit" name="add_meal" class="btn">🍴 Add Meal</button> <!-- Different icon -->
+    </form>
+
+    <h2 class="form-heading">
+      <span class="heading-icon">🧑‍🍳</span> Add a Recipe
+    </h2>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ recipe_form.as_p }}
+      <button type="submit" name="add_recipe" class="btn">📚 Add Recipe</button> <!-- Different icon -->
+    </form>
+
+    <h2 class="form-heading">
+      <span class="heading-icon">🧺</span> Add Grocery Item
+    </h2>
+    <form method="POST">
+      {% csrf_token %}
+      {{ grocery_form.as_p }}
+      <button type="submit" name="add_grocery" class="btn">🛒 Add Grocery Item</button> <!-- Different icon -->
+    </form>
+    <a href="{% url 'home' %}" class="btn btn-success">View Submitted Data</a>
+
+
+  </div>
+</body>
+</html>

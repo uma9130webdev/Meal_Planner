@@ -1,0 +1,138 @@
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f4f8;
+  font-family: 'Segoe UI', sans-serif;
+  background-image: url("https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 1rem;
+}
+
+/* Container for all forms */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  padding: 2rem;
+}
+
+/* Highlighted form headings */
+.form-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: linear-gradient(90deg, #ff6a00, #ee0979); /* warm orange-pink */
+  color: white;
+  padding: 0.9rem 1.4rem;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.6rem;
+  box-shadow: 0 4px 15px rgba(238, 9, 121, 0.5);
+  user-select: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-heading:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(238, 9, 121, 0.75);
+}
+
+.heading-icon {
+  font-size: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-shadow: 0 0 4px rgba(0,0,0,0.3);
+  user-select: none;
+}
+
+/* Form styling */
+form {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 100%;
+}
+
+/* Labels and inputs */
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #6a11cb;
+}
+
+input[type="text"],
+input[type="file"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #43cea2;
+  outline: none;
+  box-shadow: 0 0 8px 0 #43cea2aa;
+}
+
+/* Button styling */
+.btn {
+  display: inline-block;
+  padding: 0.65rem 1.3rem;
+  font-size: 1.1rem;
+  background: linear-gradient(90deg, #00c6ff, #0072ff); /* cool blue contrast */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 114, 255, 0.4);
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.btn:hover {
+  background: linear-gradient(90deg, #0072ff, #00c6ff);
+  box-shadow: 0 6px 18px rgba(0, 114, 255, 0.6);
+  transform: scale(1.05);
+}
+
+/* Responsive layout */
+@media (max-width: 600px) {
+  .form-container {
+    padding: 1rem;
+  }
+
+  .form-heading {
+    font-size: 1.2rem;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
